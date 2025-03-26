@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slice & Vote | Pizza Voting App</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Pacifico&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <div class="header-content">
+        <h1 class="logo">
+          <i class="fas fa-pizza-slice logo-icon"></i>
+          Slice & Vote
+        </h1>
+        <p class="tagline">Choose your favorite pizza!</p>
+      </div>
+    </header>
+
+    <main class="pizza-gallery">
+      {% for pizza in pizzas %}
+      <div class="pizza-card">
+        <div class="card-image">
+          <img src="{{ pizza.image.url }}" alt="{{ pizza.name }}" class="pizza-img">
+          <div class="vote-count">
+            <i class="fas fa-heart"></i>
+            <span>{{ pizza.votes }}</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <h3 class="pizza-name">{{ pizza.name }}</h3>
+          <form action="{% url 'vote' pizza.id %}" method="post" class="vote-form">
+            {% csrf_token %}
+            <button type="submit" class="vote-button">
+              <i class="fas fa-vote-yea"></i> Vote Now
+            </button>
+          </form>
+        </div>
+      </div>
+      {% endfor %}
+    </main>
+
+    <footer class="app-footer">
+      <div class="footer-content">
+        <p>© 2025 Slice & Vote | Made with <i class="fas fa-heart"></i> for pizza lovers</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-facebook"></i></a>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
